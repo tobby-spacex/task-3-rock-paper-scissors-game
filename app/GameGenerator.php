@@ -68,7 +68,17 @@ class GameGenerator
             echo "Right group: " . implode(", ", $rightGroup) . "\n";
 
             if($input) {
-                echo "Computer move: " . $this->computerMove($this->values, intval($input)) . "\n";
+                sleep(3);
+                $computerMove = $this->computerMove($this->values, intval($input));
+                echo "Computer move: " . $computerMove . "\n";
+
+                if(in_array($computerMove, $rightGroup)) {
+                    echo "Computer Win\n";
+                } else {
+                    echo "User Win\n";
+                }
+
+                exit;
             }
         }
     }
