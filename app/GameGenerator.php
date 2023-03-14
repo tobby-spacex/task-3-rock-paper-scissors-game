@@ -4,17 +4,21 @@ namespace App;
 
 use App\GameTable;
 use App\HmacCryptography;
+use App\GameRules;
 
 class GameGenerator
 {
     private $values;
 
     private $hmac;
+
+    private $gameRules;
     
     public function __construct(array $values)
     {
-        $this->values = $values;
-        $this->hmac = new HmacCryptography();
+        $this->values    = $values;
+        $this->hmac      = new HmacCryptography();
+        $this->gameRules = new GameRules();
     }
     
     public function printAvailableMoves(): void
@@ -67,36 +71,9 @@ class GameGenerator
             echo "Your move: $selectedValue\n";
             echo "Computer move: " . $computerMove . "\n";
             
-            $index = $input - 1;
-            $leftGroup = [];
-            $rightGroup = [];
-            
-            for ($i = 1; $i < count($this->values); $i++) {
-                $valueIndex = ($index - $i + count($this->values)) % count($this->values);
-                $value = $this->values[$valueIndex];
-                if ($i <= floor(count($this->values) / 2)) {
-                    array_unshift($leftGroup, $value);
-                } else {
-                    array_unshift($rightGroup, $value);
-                }
-            }
-            
-            // echo "Left group: " . implode(", ", $leftGroup) . "\n";
-            // echo "Right group: " . implode(", ", $rightGroup) . "\n";
-
-            if($input) {
-                sleep(2);
-                if(in_array($computerMove, $rightGroup)) {
-                    echo "Computer Win\n";
-                } elseif($selectedValue == $computerMove) {
-                    echo "Draw :)\n";
-                } else {
-                    echo "You Win\n";
-                }
-
-                $this->hmac->hmacKey();
-                exit;
-            }
+            $this->gameRules->gameProtocol($input, $this->values, $computerMove, $selectedValue);
+            $this->hmac->hmacKey();
+            exit;
         }
     }
 
