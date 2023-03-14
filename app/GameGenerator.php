@@ -62,8 +62,8 @@ class GameGenerator
                 continue;
             }
             
-            if (!isset($this->values[$input - 1])) {
-                echo "Invalid input. Please try again.\n";
+            if (empty($input)) {
+                echo "Invalid input. Please try again.\n\n";
                 continue;
             }
             
