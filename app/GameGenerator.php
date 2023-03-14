@@ -23,10 +23,12 @@ class GameGenerator
         
         echo "0 - exit\n";
         echo "? - help\n";
+        echo "Enter your move: ";
     }
 
     public function play(): void
     {
+
         while (true) {
             $this->printAvailableMoves();
             $input = trim(fgets(STDIN));
@@ -64,6 +66,24 @@ class GameGenerator
             
             echo "Left group: " . implode(", ", $leftGroup) . "\n";
             echo "Right group: " . implode(", ", $rightGroup) . "\n";
+
+            if($input) {
+                echo "Computer move: " . $this->computerMove($this->values, intval($input)) . "\n";
+            }
         }
+    }
+
+    public function computerMove($options, $userMove): string
+    {
+        array_unshift($options,"");
+        unset($options[0]);
+
+        $randomIndex = array_rand($options);
+        while ($randomIndex === $userMove) {
+            $randomIndex = array_rand($options);
+        }
+        
+        $randomElement = $options[$randomIndex];
+        return $randomElement;
     }
 }
