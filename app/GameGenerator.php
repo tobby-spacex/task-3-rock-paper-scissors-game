@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\GameTable;
+
 class GameGenerator
 {
     private $values;
@@ -38,7 +40,7 @@ class GameGenerator
             }
             
             if ($input === '?') {
-                $this->printAvailableMoves();
+                GameTable::displayHelpTable($this->values);
                 continue;
             }
             
