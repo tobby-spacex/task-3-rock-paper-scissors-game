@@ -1,0 +1,15 @@
+{
+    "name": "root/www",
+    "description": "Itransition Task#3",
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    },
+    "authors": [
+        {
+            "name": "arman.fayziev"
+        }
+    ],
+    "require": {}
+}
