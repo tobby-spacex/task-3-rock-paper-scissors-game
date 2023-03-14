@@ -30,6 +30,14 @@ class GameGenerator
 
     public function play(): void
     {
+        if(count($this->values) < 3) {
+            print "Please pass more than 3 arguments to start the game!\n";
+            exit;
+        } elseif(count($this->values) % 2 == 0) {
+            print "According to the rules of the game, you cannot pass an even number of arguments.
+            \nPass an odd number of arguments, greater than 3.\nExample: rock, paper, scissors, Spock lizard \n";
+            exit;
+        }
 
         while (true) {
             $this->printAvailableMoves();
@@ -66,8 +74,8 @@ class GameGenerator
                 }
             }
             
-            echo "Left group: " . implode(", ", $leftGroup) . "\n";
-            echo "Right group: " . implode(", ", $rightGroup) . "\n";
+            // echo "Left group: " . implode(", ", $leftGroup) . "\n";
+            // echo "Right group: " . implode(", ", $rightGroup) . "\n";
 
             if($input) {
                 sleep(3);
@@ -95,7 +103,6 @@ class GameGenerator
             $randomIndex = array_rand($options);
         }
         
-        $randomElement = $options[$randomIndex];
-        return $randomElement;
+        return $options[$randomIndex]; 
     }
 }
