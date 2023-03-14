@@ -3,14 +3,18 @@
 namespace App;
 
 use App\GameTable;
+use App\HmacCryptography;
 
 class GameGenerator
 {
     private $values;
+
+    private $hmac;
     
     public function __construct(array $values)
     {
         $this->values = $values;
+        $this->hmac = new HmacCryptography();
     }
     
     public function printAvailableMoves(): void
@@ -40,6 +44,8 @@ class GameGenerator
         }
 
         while (true) {
+            $computerMove = $this->computerMove($this->values);
+            $this->hmac->hmacGenerating($computerMove);
             $this->printAvailableMoves();
             $input = trim(fgets(STDIN));
             
@@ -59,6 +65,7 @@ class GameGenerator
             
             $selectedValue = $this->values[$input - 1];
             echo "Your move: $selectedValue\n";
+            echo "Computer move: " . $computerMove . "\n";
             
             $index = $input - 1;
             $leftGroup = [];
@@ -78,30 +85,27 @@ class GameGenerator
             // echo "Right group: " . implode(", ", $rightGroup) . "\n";
 
             if($input) {
-                sleep(3);
-                $computerMove = $this->computerMove($this->values, intval($input));
-                echo "Computer move: " . $computerMove . "\n";
-
+                sleep(2);
                 if(in_array($computerMove, $rightGroup)) {
                     echo "Computer Win\n";
+                } elseif($selectedValue == $computerMove) {
+                    echo "Draw :)\n";
                 } else {
-                    echo "User Win\n";
+                    echo "You Win\n";
                 }
 
+                $this->hmac->hmacKey();
                 exit;
             }
         }
     }
 
-    public function computerMove($options, $userMove): string
+    public function computerMove($options): string
     {
         array_unshift($options,"");
         unset($options[0]);
 
         $randomIndex = array_rand($options);
-        while ($randomIndex === $userMove) {
-            $randomIndex = array_rand($options);
-        }
         
         return $options[$randomIndex]; 
     }
