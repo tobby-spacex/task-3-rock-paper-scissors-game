@@ -49,7 +49,7 @@ class GameGenerator
 
         while (true) {
             $computerMove = $this->computerMove($this->values);
-            $this->hmac->hmacGenerating($computerMove);
+            echo "HMAC: " . $this->hmac->hmacGenerating($computerMove). "\n";
             $this->printAvailableMoves();
             $input = trim(fgets(STDIN));
             
@@ -72,7 +72,7 @@ class GameGenerator
             echo "Computer move: " . $computerMove . "\n";
             
             $this->gameRules->gameProtocol($input, $this->values, $computerMove, $selectedValue);
-            $this->hmac->hmacKey();
+            echo "HMAC key: " . $this->hmac->hmacKey(). "\n";
             exit;
         }
     }

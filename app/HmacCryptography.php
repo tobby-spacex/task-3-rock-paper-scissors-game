@@ -6,20 +6,33 @@ class HmacCryptography
 {
     private $secureKey;
 
+    /**
+     * HmacCryptography constructor.
+     */
     public function __construct()
     {
         $this->secureKey = random_bytes(32);
     }
 
-    public function hmacGenerating($computerMove)
+    /**
+     * Generate the HMAC.
+     * 
+     * @param string $computerMove The input string.
+     * 
+     * @return string The generated HMAC.
+     */
+    public function hmacGenerating($computerMove): string
     {
-        $hmac = hash_hmac('sha256', $computerMove, $this->secureKey);
-        
-        return print "HMAC: " . strtoupper($hmac) . "\n";
+        return hash_hmac('sha256', $computerMove, $this->secureKey);
     }
 
-    public function hmacKey()
+    /**
+     * Get the HMAC key.
+     * 
+     * @return string The HMAC key.
+     */
+    public function hmacKey(): string
     {
-        return print "HMAC key: " . strtoupper(bin2hex($this->secureKey)) . "\n";
+        return strtoupper(bin2hex($this->secureKey));
     }
 }
