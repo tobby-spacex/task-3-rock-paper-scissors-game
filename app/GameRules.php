@@ -4,7 +4,7 @@ namespace App;
 
 class GameRules
 {
-    public function gameProtocol($userInput, $inputArgs, $computerMove, $userSelectedValue): void
+    public function gameProtocol(int $userInput, array $inputArgs, string $computerMove, string $userSelectedValue): void
     {
         $index = $userInput - 1;
         $leftGroup = [];
