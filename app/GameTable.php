@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App;
 
@@ -8,10 +8,9 @@ use LucidFrame\Console\ConsoleTable;
 
 class GameTable
 {
-    public static function displayHelpTable($moveOptions)
+    public static function displayHelpTable(array $moveOptions): void
     {
         $options = $moveOptions;
-
         $table = new ConsoleTable();
         $table->setHeaders(array_merge(array(''), $options));
     
@@ -23,7 +22,7 @@ class GameTable
                     $cellValue = 'Draw';
                 } else {
                     $distance = ($j - $i + $numOptions) % $numOptions;
-                    if ($distance <= ($numOptions-1)/2) {
+                    if ($distance <= ($numOptions - 1) / 2) {
                         $cellValue = 'Win';
                     } else {
                         $cellValue = 'Lose';
@@ -34,10 +33,10 @@ class GameTable
             $table->addRow($row);
         }
     
+
         $table
             ->setPadding(2)
             ->showAllBorders()
             ->display();
-        
     }
 }
